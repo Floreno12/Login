@@ -1386,7 +1386,7 @@
 // 	const [isScrollDisabled, setIsScrollDisabled] = useState(true);
 // 	const [isValidationEnabled, setIsValidationEnabled] = useState(true);
 // 	const [userPrivileges, setUserPrivileges] = useState(null);
-	
+
 // 	const toast = useRef(null);
 
 
@@ -1396,10 +1396,10 @@
 // 			.then(response => response.json())
 // 			.then(data => {
 // 				setUserPrivileges(data.privileges);
-				
+
 // 			})
 // 			.catch(error => console.error('Error ferching the privilege', error));
-			
+
 // 		}
 // 	},[icon_username]);
 
@@ -2114,7 +2114,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { Menubar } from 'primereact/menubar';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Divider } from '@mui/material';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 import { InputText } from 'primereact/inputtext';
@@ -2129,7 +2129,7 @@ import SepioLogo from './../image/Sepio_Logo.png';
 import { Toast } from 'primereact/toast';
 import Switch from '@mui/material/Switch';
 import Typography from '@mui/material/Typography';
-import {Oval} from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 
 export default function Layout({ icon_username }) {
 	const navigate = useNavigate();
@@ -2154,8 +2154,8 @@ export default function Layout({ icon_username }) {
 					setUserPrivileges(data.privileges);
 					setTimeout(() => {
 						setIsLoading(false); // Set loading to false after fetching data
-					},100)
-					
+					}, 100)
+
 				})
 				.catch(error => {
 					console.error('Error fetching the privilege', error);
@@ -2346,9 +2346,16 @@ export default function Layout({ icon_username }) {
 					horizontal: 'center',
 				}}
 			>
-				<MenuItem sx={{ display: 'flex', justifyContent: 'center' }} title='Profile'>
+				<Divider spacing={2}>User</Divider>
+				<MenuItem sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }} title='Profile'>
 					<p style={{ marginBottom: '0px' }}>
-						User: {icon_username}
+						{icon_username}
+					</p>
+				</MenuItem>
+				<Divider spacing={1}>Role</Divider>
+				<MenuItem sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }} title='Profile'>
+					<p style={{ marginBottom: '0px' }}>
+						{userPrivileges}
 					</p>
 				</MenuItem>
 			</Menu>
@@ -2389,11 +2396,11 @@ export default function Layout({ icon_username }) {
 						</CNavItem>
 						<CNavItem>
 							{!isLoading && userPrivileges !== 'UI_USER' && (
-						<NavLink to='/querytool/createuser' className='nav-link'>
-								<RiDashboardLine className='nav-icon' /> Users
-							</NavLink>
+								<NavLink to='/querytool/createuser' className='nav-link'>
+									<RiDashboardLine className='nav-icon' /> Users
+								</NavLink>
 							)}
-							</CNavItem>
+						</CNavItem>
 					</CSidebarNav>
 				</CSidebar>
 
@@ -2498,7 +2505,7 @@ export default function Layout({ icon_username }) {
 					backgroundColor: 'rgba(255, 255, 255, 0.8)',
 					zIndex: 2000
 				}}>
-					
+
 				</div>
 			)}
 		</div>

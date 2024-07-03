@@ -139,7 +139,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Menubar } from 'primereact/menubar';
-import { Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem, Divider } from '@mui/material';
 import { InputText } from 'primereact/inputtext';
 import { Avatar } from 'primereact/avatar';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -156,7 +156,7 @@ import 'primeicons/primeicons.css';
 import axios from 'axios';
 import { Message } from 'primereact/message';
 import { Toast } from 'primereact/toast';
-import {Oval} from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 
 export default function Layout({ icon_username }) {
 
@@ -177,20 +177,20 @@ export default function Layout({ icon_username }) {
 
 
 	useEffect(() => {
-		if(icon_username){
-		fetch(`/api/user/${icon_username}`)
-		.then(response => response.json())
-		.then(data => {
-			SetUserPrivileges(data.privileges);
-			setTimeout(() => {
-			setIsLoading(false);
+		if (icon_username) {
+			fetch(`/api/user/${icon_username}`)
+				.then(response => response.json())
+				.then(data => {
+					SetUserPrivileges(data.privileges);
+					setTimeout(() => {
+						setIsLoading(false);
 
-		},100)
-		})
-		.catch(error => {
-			console.error('Error fetching the privilege', error);
-			setIsLoading(false); // Set loading to false even if there is an error
-		});
+					}, 100)
+				})
+				.catch(error => {
+					console.error('Error fetching the privilege', error);
+					setIsLoading(false); // Set loading to false even if there is an error
+				});
 		}
 	}, [icon_username]);
 
@@ -359,9 +359,16 @@ export default function Layout({ icon_username }) {
 					horizontal: 'center',
 				}}
 			>
-				<MenuItem sx={{ display: 'flex', justifyContent: 'center' }} title='Profile'>
+				<Divider spacing={2}>User</Divider>
+				<MenuItem sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }} title='Profile'>
 					<p style={{ marginBottom: '0px' }}>
-						User: {icon_username}
+						{icon_username}
+					</p>
+				</MenuItem>
+				<Divider spacing={1}>Role</Divider>
+				<MenuItem sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }} title='Profile'>
+					<p style={{ marginBottom: '0px' }}>
+						{userPrivileges}
 					</p>
 				</MenuItem>
 			</Menu>
@@ -427,12 +434,12 @@ export default function Layout({ icon_username }) {
 							<NavLink to='/querytool/settings' className='nav-link'><RiDashboardLine className='nav-icon' /> Settings </NavLink>
 						</CNavItem>
 						<CNavItem>
-							{!isLoading && userPrivileges !== 'UI_USER' &&(
-						<NavLink to='/querytool/createuser' className='nav-link'>
-								<RiDashboardLine className='nav-icon' /> Users
-							</NavLink>
+							{!isLoading && userPrivileges !== 'UI_USER' && (
+								<NavLink to='/querytool/createuser' className='nav-link'>
+									<RiDashboardLine className='nav-icon' /> Users
+								</NavLink>
 							)}
-							</CNavItem>
+						</CNavItem>
 					</CSidebarNav>
 				</CSidebar>
 
@@ -506,7 +513,7 @@ export default function Layout({ icon_username }) {
 				</div>
 			</div>
 			{isLoading && (
-				<div style ={{
+				<div style={{
 					display: 'flex',
 					justifyContent: 'center',
 					alignItems: 'center',

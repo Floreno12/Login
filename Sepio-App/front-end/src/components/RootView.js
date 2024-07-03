@@ -559,7 +559,7 @@ import { Menubar } from 'primereact/menubar';
 import { Avatar } from 'primereact/avatar';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'primereact/button';
-import { Menu, MenuItem } from '@mui/material';
+import { Divider, Menu, MenuItem, setRef } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { CSidebar, CSidebarNav, CNavItem, CContainer, CForm } from '@coreui/react';
 import { RiDashboardLine } from 'react-icons/ri';
@@ -580,6 +580,7 @@ export default function Layout({ icon_username }) {
 				.then(response => response.json())
 				.then(data => {
 					setUserPrivileges(data.privileges);
+					console.log(data.privileges)
 					setTimeout(() => {
 						setIsLoading(false);
 					}, 100); // Simulate a delay of 1 second
@@ -590,6 +591,8 @@ export default function Layout({ icon_username }) {
 				});
 		}
 	}, [icon_username]);
+
+
 
 	const handleLogout = () => {
 		navigate('/');
@@ -651,7 +654,7 @@ export default function Layout({ icon_username }) {
 				PaperProps={{
 					elevation: 5,
 					sx: {
-						width: '120px',
+						width: '140px',
 						borderRadius: '10px',
 						overflow: 'visible',
 						mt: 1,
@@ -678,9 +681,16 @@ export default function Layout({ icon_username }) {
 					horizontal: 'center',
 				}}
 			>
-				<MenuItem sx={{ display: 'flex', justifyContent: 'center' }} title='Profile'>
+				<Divider spacing={2}>User</Divider>
+				<MenuItem sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }} title='Profile'>
 					<p style={{ marginBottom: '0px' }}>
-						User: {icon_username}
+						{icon_username}
+					</p>
+				</MenuItem>
+				<Divider spacing={1}>Role</Divider>
+				<MenuItem sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column' }} title='Profile'>
+					<p style={{ marginBottom: '0px' }}>
+						{userPrivileges}
 					</p>
 				</MenuItem>
 			</Menu>
@@ -760,7 +770,7 @@ export default function Layout({ icon_username }) {
 					backgroundColor: 'rgba(255, 255, 255, 0.8)',
 					zIndex: 2000
 				}}>
-					
+
 				</div>
 			)}
 		</div>
