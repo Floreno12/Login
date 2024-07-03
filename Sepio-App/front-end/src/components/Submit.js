@@ -787,8 +787,37 @@ export default function Layout({ icon_username }) {
 	};
 
 	// Call to the server
+	// const handleSubmit = (event) => {
+	// 	event.preventDefault();
+	// 	setStatus('loading');
+	// 	axios.post('/user/privileges', formData)
+	// 		.then(response => {
+	// 			if (response.data.success) {
+	// 				showSuccess('User has been created');
+	// 				console.log('User created:', response.data);
+	// 				// Navigate to the users list page or any other page
+	// 				setTimeout(() => {
+	// 					navigate('/querytool/createuser');
+	// 				}, 1500);
+	// 			} else {
+	// 				setStatus('failure');
+	// 				console.log('Error');
+	// 				showError('Error');
+	// 			}
+	// 		})
+	// 		.catch(error => {
+	// 			setStatus('failure');
+	// 			console.error('There was an error creating the user!', error);
+	// 			showError('Error creating the user!');
+	// 		});
+	// };
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		if (formData.password !== formData.confirmPassword) {
+			showError('Passwords do not match');
+			return;
+		}
 		setStatus('loading');
 		axios.post('/user/privileges', formData)
 			.then(response => {
@@ -951,10 +980,13 @@ export default function Layout({ icon_username }) {
 								<FormControl spacing={0.9}>
 									<FormLabel>Password</FormLabel>
 									<Input name="password" style={{ maxWidth: '250px' }} type="password" value={formData.password} onChange={handleInputChange} />
-									<LinearProgress className="shadow" determinate size="sm" value={Math.min((formData.password.length * 100) / minLength, 100)} sx={{ marginTop: '5px', bgcolor: 'background.level3', '& .MuiLinearProgress-bar': { backgroundColor: strengthColor }, color: strengthColor }} />
 									<Typography level="body-xs" sx={{ alignSelf: 'flex-end', color: strengthColor }}>
 										{getStrengthMessage(strength)}
 									</Typography>
+								</FormControl>
+								<FormControl>
+									<FormLabel>Confirm password</FormLabel>
+									<Input name="confirmPassword" style={{ maxWidth: '250px' }} type="password" value={formData.confirmPassword} onChange={handleInputChange} />
 								</FormControl>
 								<FormControl>
 									<FormLabel>Privileges</FormLabel>
